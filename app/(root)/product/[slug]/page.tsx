@@ -4,6 +4,7 @@ import { getProductBySlug } from "@/lib/actions/product.actions";
 import { notFound } from "next/navigation";
 import ProductPrice from "@/components/shared/product/product-price";
 import { Button } from "@/components/ui/button";
+import ProductImages from "@/components/shared/product/product-images";
 
 const ProductDetailsPage = async (props: {
   params: Promise<{ slug: string }>;
@@ -17,7 +18,9 @@ const ProductDetailsPage = async (props: {
     <>
       <section>
         <div className="grid grid-cols-1 md:grid-cols-5">
-          <div className="col-span-2">{/* Images Component */}</div>
+          <div className="col-span-2">
+            <ProductImages images={product.images} />
+          </div>
           <div className="col-span-2 p-5">
             <div className="flex flex-col gap-6">
               <p>
@@ -30,7 +33,7 @@ const ProductDetailsPage = async (props: {
               <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                 <ProductPrice
                   value={Number(product.price)}
-                  className="w-24 rounded-full bg-green-100 text-green-700 px-5 py-2"
+                  className="w-26 rounded-full bg-green-100 text-green-700 px-5 py-2"
                 />
               </div>
             </div>
@@ -49,16 +52,16 @@ const ProductDetailsPage = async (props: {
                   </div>
                 </div>
                 <div className="mb-2 flex justify-between">
-                    <div>Status</div>
-                    {product.stock > 0 ? (
-                        <Badge variant='outline'>In Stock</Badge>
-                    ) : (
-                        <Badge variant='destructive'>Out Of Stock</Badge>
-                    )}
+                  <div>Status</div>
+                  {product.stock > 0 ? (
+                    <Badge variant="outline">In Stock</Badge>
+                  ) : (
+                    <Badge variant="destructive">Out Of Stock</Badge>
+                  )}
                 </div>
                 {product.stock > 0 && (
                   <div className="flex-center">
-                    <Button className='w-full'>Add To Cart</Button>
+                    <Button className="w-full">Add To Cart</Button>
                   </div>
                 )}
               </CardContent>
