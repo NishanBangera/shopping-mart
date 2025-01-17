@@ -72,20 +72,20 @@ export const config = {
       if (user) {
         token.role = user.role;
 
-        // If user has no name then use the email
-        if (user.name === "NO_NAME") {
-          token.name = user.email!.split("@")[0];
+        // // If user has no name then use the email
+        // if (user.name === "NO_NAME") {
+        //   token.name = user.email!.split("@")[0];
 
-          // Update database to reflect the token name
-          await prisma.user.update({
-            where: { id: user.id },
-            data: { name: token.name },
-          });
-        }
+        //   // Update database to reflect the token name
+        //   await prisma.user.update({
+        //     where: { id: user.id },
+        //     data: { name: token.name },
+        //   });
+        // }
       }
       return token;
     },
-    authorized({ request}: any) {
+    authorized({ request }: any) {
       // Check for session cart cookie
       if (!request.cookies.get("sessionCartId")) {
         // Generate new session cart id cookie
