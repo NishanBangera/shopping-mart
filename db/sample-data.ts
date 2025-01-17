@@ -1,16 +1,17 @@
-import { hashSync } from 'bcrypt-ts-edge'
+// import { hashSync } from 'bcrypt-ts-edge'
+import bcryptjs from 'bcryptjs'
 const sampleData = {
   users: [
     {
       name: 'Harry',
       email: 'harry@gmail.com',
-      password: hashSync('123456', 10),
+      password: bcryptjs.hashSync('123456', 10),
       role: 'admin'
     },
     {
       name: 'Hermonie',
       email: 'hermonie@gmail.com',
-      password: hashSync('123456', 10),
+      password: bcryptjs.hashSync('123456', 10),
       role: 'user'
     }
   ],
