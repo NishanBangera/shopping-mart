@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { signUpDefaultValues } from "@/lib/constants";
 import Link from "next/link";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
@@ -39,7 +38,6 @@ const SignUpForm = () => {
             name="name"
             type="text"
             autoComplete="name"
-            defaultValue={signUpDefaultValues.name}
             required
           />
         </div>
@@ -50,7 +48,6 @@ const SignUpForm = () => {
             name="email"
             type="text"
             autoComplete="email"
-            defaultValue={signUpDefaultValues.email}
             required
           />
         </div>
@@ -61,7 +58,6 @@ const SignUpForm = () => {
             name="password"
             type="password"
             autoComplete="password"
-            defaultValue={signUpDefaultValues.password}
             required
           />
         </div>
@@ -72,7 +68,6 @@ const SignUpForm = () => {
             name="confirmPassword"
             type="password"
             autoComplete="confirmPassword"
-            defaultValue={signUpDefaultValues.confirmPassword}
             required
           />
         </div>

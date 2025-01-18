@@ -5,7 +5,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { APP_NAME } from "@/lib/constants";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -37,7 +36,7 @@ const SignUpPage = async (props: {
               src="/images/logo.svg"
               width={100}
               height={100}
-              alt={`${APP_NAME} logo`}
+              alt={`${process.env.APP_NAME} logo`}
               priority={true}
             />
           </Link>
