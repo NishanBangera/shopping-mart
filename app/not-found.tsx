@@ -9,7 +9,7 @@ const NotFoundPage = () => {
         src="/images/logo.svg"
         width={48}
         height={48}
-        alt={`${process.env.APP_NAME} logo`}
+        alt={`${process.env.NEXT_PUBLIC_APP_NAME} logo`}
         priority={true}
       />
       <div className="p-6 rounded-lg shadow-md text-center">

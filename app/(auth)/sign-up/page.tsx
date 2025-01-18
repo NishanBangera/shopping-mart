@@ -36,7 +36,7 @@ const SignUpPage = async (props: {
               src="/images/logo.svg"
               width={100}
               height={100}
-              alt={`${process.env.APP_NAME} logo`}
+              alt={`${process.env.NEXT_PUBLIC_APP_NAME} logo`}
               priority={true}
             />
           </Link>

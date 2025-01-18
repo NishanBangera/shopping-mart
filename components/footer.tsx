@@ -3,7 +3,7 @@ const Footer = () => {
     return ( 
         <footer className='border-t'>
             <div className="p-5 flex-center">
-                {currentYear} {process.env.APP_NAME}. All Rights Reserved
+                {currentYear} {process.env.NEXT_PUBLIC_APP_NAME}. All Rights Reserved
             </div>
         </footer>
      );

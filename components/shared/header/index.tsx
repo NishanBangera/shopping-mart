@@ -10,13 +10,13 @@ const Header = () => {
           <Link href="/" className="flex-start">
             <Image
               src="/images/logo.svg"
-              alt={`${process.env.APP_NAME} logo`}
+              alt={`${process.env.NEXT_PUBLIC_APP_NAME} logo`}
               height={48}
               width={48}
               priority={true}
             />
             <span className="hidden lg:block font-bold text-2xl ml-3">
-              {process.env.APP_NAME}
+              {process.env.NEXT_PUBLIC_APP_NAME}
             </span>
           </Link>
         </div>
