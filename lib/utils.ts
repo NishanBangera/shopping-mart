@@ -10,22 +10,6 @@ export function convertToPlainObject<T>(value: T): T {
   return JSON.parse(JSON.stringify(value));
 }
 
-//Format number with decimal places
-export function formatNumberWithComma(str: string): string {
-  if (str.length > 3) {
-    let str2 = str.slice(str.length - 3);
-    for (let i = str.length - 4; i >= 0; i--) {
-      if (i % 2 === 0) {
-        str2 = str[i] + "," + str2;
-        continue;
-      }
-      str2 = str[i] + str2;
-    }
-    return str2;
-  }
-  return str;
-}
-
 // Format errors
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function formatError(error: any) {
@@ -47,5 +31,18 @@ export function formatError(error: any) {
     return typeof error.message === "string"
       ? error.message
       : JSON.stringify(error.message);
+  }
+}
+
+const CURRENCY_FORMATTER = new Intl.NumberFormat("en-IN");
+
+//Format currency using the formatter above
+export function formatCurrency(amount: number | string | null) {
+  if (typeof amount === "number") {
+    return CURRENCY_FORMATTER.format(amount);
+  } else if (typeof amount === "string") {
+    return CURRENCY_FORMATTER.format(Number(amount));
+  } else {
+    return "NaN";
   }
 }
