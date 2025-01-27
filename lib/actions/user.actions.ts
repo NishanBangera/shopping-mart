@@ -12,6 +12,7 @@ import bcryptjs from "bcryptjs";
 import { prisma } from "@/db/prisma";
 import { formatError } from "../utils";
 import { ShippingAddress } from "@/types";
+import { z } from "zod";
 
 // Sign in the user with credentials
 export async function signInWithCredentials(
