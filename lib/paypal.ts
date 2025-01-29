@@ -57,7 +57,7 @@ async function generateAccessToken() {
       Content_Type: "application/x-www-form-urlencoded",
     },
   });
-
+  
   const jsonData = await handleResponse(response);
   return jsonData.access_token;
 }

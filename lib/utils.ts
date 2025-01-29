@@ -91,3 +91,16 @@ export const formatDateTime = (dateString: Date) => {
     timeOnly: formattedTime,
   };
 };
+
+export const convertInrToUsd = async (price: number) => {
+  const API_KEY = process.env.EXCHANGE_RATE_API_KEY
+  const url = `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/USD`
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    const {INR}:{INR:number} = data.conversion_rates
+    return Number((price/INR).toFixed(2))
+  } catch (error) {
+    throw new Error(`Error fetching data: ${error}`);
+  }
+}
