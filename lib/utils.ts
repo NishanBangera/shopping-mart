@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import qs from "query-string";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -48,41 +49,41 @@ export function formatCurrency(amount: number | string | null) {
 }
 
 // Shorten UUID
-export function formatId(id: string){
-  return `..${id.substring(id.length - 6)}`
+export function formatId(id: string) {
+  return `..${id.substring(id.length - 6)}`;
 }
 
 //Format date and time
 export const formatDateTime = (dateString: Date) => {
   const dateTimeOptions: Intl.DateTimeFormatOptions = {
-    month: 'short',
-    year: 'numeric',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    hour12: true, 
+    month: "short",
+    year: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
   };
   const dateOptions: Intl.DateTimeFormatOptions = {
-    weekday: 'short',
-    month: 'short',
-    year: 'numeric',
-    day: 'numeric',
+    weekday: "short",
+    month: "short",
+    year: "numeric",
+    day: "numeric",
   };
   const timeOptions: Intl.DateTimeFormatOptions = {
-    hour: 'numeric',
-    minute: 'numeric',
+    hour: "numeric",
+    minute: "numeric",
     hour12: true,
   };
   const formattedDateTime: string = new Date(dateString).toLocaleString(
-    'en-US',
+    "en-US",
     dateTimeOptions
   );
   const formattedDate: string = new Date(dateString).toLocaleString(
-    'en-US',
+    "en-US",
     dateOptions
   );
   const formattedTime: string = new Date(dateString).toLocaleString(
-    'en-US',
+    "en-US",
     timeOptions
   );
   return {
@@ -92,15 +93,41 @@ export const formatDateTime = (dateString: Date) => {
   };
 };
 
+// Convert INR to USD
 export const convertInrToUsd = async (price: number) => {
-  const API_KEY = process.env.EXCHANGE_RATE_API_KEY
-  const url = `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/USD`
+  const API_KEY = process.env.EXCHANGE_RATE_API_KEY;
+  const url = `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/USD`;
   try {
     const response = await fetch(url);
     const data = await response.json();
-    const {INR}:{INR:number} = data.conversion_rates
-    return Number((price/INR).toFixed(2))
+    const { INR }: { INR: number } = data.conversion_rates;
+    return Number((price / INR).toFixed(2));
   } catch (error) {
     throw new Error(`Error fetching data: ${error}`);
   }
+};
+
+// Build the pagination links
+export function buildUrlQuery({
+  params,
+  key,
+  value,
+}: {
+  params: string;
+  key: string;
+  value: string | null;
+}) {
+  const query = qs.parse(params);
+
+  query[key] = value;
+
+  return qs.stringifyUrl(
+    {
+      url: window.location.pathname,
+      query,
+    },
+    {
+      skipNull: true,
+    }
+  );
 }
