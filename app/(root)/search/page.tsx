@@ -6,6 +6,72 @@ import {
 } from "@/lib/actions/product.actions";
 import Link from "next/link";
 
+const prices = [
+  {
+    name: "₹100 - ₹500",
+    value: "100-500",
+  },
+  {
+    name: "₹500 - ₹1000",
+    value: "500-1000",
+  },
+  {
+    name: "₹1000 - ₹1500",
+    value: "1000-1500",
+  },
+  {
+    name: "₹1500 - ₹2000",
+    value: "1500-2000",
+  },
+  {
+    name: "₹2000 - ₹2500",
+    value: "2000-2500",
+  },
+  {
+    name: "₹2500 - ₹3000",
+    value: "2500-3000",
+  },
+];
+
+const ratings = ["4", "3", "2", "1"];
+
+const sortOrders = ["newest", "lowest", "highest", "toprated"];
+
+export async function generateMetadata(props: {
+  searchParams: Promise<{
+    q: string;
+    category: string;
+    price: string;
+    rating: string;
+  }>;
+}) {
+  const {
+    q = "all",
+    category = "all",
+    price = "all",
+    rating = "all",
+  } = await props.searchParams;
+
+  const isQuerySet = q !== "all" && q !== "" && q.trim() !== "";
+  const isCategorySet = category !== "all" && category.trim() !== "";
+  const isPriceSet = price !== "all" && price.trim() !== "";
+  const isRatingSet = rating !== "all" && rating.trim() !== "";
+
+  if (isQuerySet || isCategorySet || isPriceSet || isRatingSet) {
+    return {
+      title: `
+      Search results for ${isQuerySet ? q : ""}
+      ${isCategorySet ? `: Category ${category}` : ""} 
+      ${isPriceSet ? `: Price ${price}` : ""} 
+      ${isRatingSet ? `: Rating ${rating}` : ""}`,
+    };
+  } else {
+    return {
+      title: "Search Products",
+    };
+  }
+}
+
 const SearchPage = async (props: {
   searchParams: Promise<{
     q?: string;
@@ -61,36 +127,6 @@ const SearchPage = async (props: {
 
   const categories = await getAllCategories();
 
-  const prices = [
-    {
-      name: "₹100 - ₹500",
-      value: "100-500",
-    },
-    {
-      name: "₹500 - ₹1000",
-      value: "500-1000",
-    },
-    {
-      name: "₹1000 - ₹1500",
-      value: "1000-1500",
-    },
-    {
-      name: "₹1500 - ₹2000",
-      value: "1500-2000",
-    },
-    {
-      name: "₹2000 - ₹2500",
-      value: "2000-2500",
-    },
-    {
-      name: "₹2500 - ₹3000",
-      value: "2500-3000",
-    },
-  ];
-
-  const ratings = ["4", "3", "2", "1"];
-
-  const sortOrders = ["newest", "lowest", "highest", "toprated"];
   return (
     <div className="grid md:grid-cols-5 md:gap-5">
       <div className="filter-links">
