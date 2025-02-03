@@ -14,7 +14,6 @@ import { prisma } from "@/db/prisma";
 import { formatError } from "../utils";
 import { ShippingAddress } from "@/types";
 import { z } from "zod";
-import { PAGE_SIZE } from "../constants";
 import { revalidatePath } from "next/cache";
 import { Prisma } from "@prisma/client";
 
@@ -169,7 +168,7 @@ export async function updateProfile(user: { name: string; email: string }) {
 
 // Get all the users
 export async function getAllUsers({
-  limit = PAGE_SIZE,
+  limit = 8,
   page,
   query,
 }: {

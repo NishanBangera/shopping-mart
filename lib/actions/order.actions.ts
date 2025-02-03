@@ -10,7 +10,6 @@ import { prisma } from "@/db/prisma";
 import { CartItem, PaymentResult } from "@/types";
 import { paypal } from "../paypal";
 import { revalidatePath } from "next/cache";
-import { PAGE_SIZE } from "../constants";
 import { Prisma } from "@prisma/client";
 
 // Create order and order items
@@ -257,7 +256,7 @@ async function updateOrderToPaid({
 
 // Get user's orders
 export async function getMyOrders({
-  limit = PAGE_SIZE,
+  limit = 8,
   page,
 }: {
   limit?: number;
@@ -330,7 +329,7 @@ export async function getOrderSummary() {
 
 // Get all orders
 export async function getAllOrders({
-  limit = PAGE_SIZE,
+  limit = 8,
   page,
   query,
 }: {
