@@ -1,7 +1,6 @@
 "use server";
 import { prisma } from "@/db/prisma";
 import { convertToPlainObject, formatError } from "../utils";
-import { PAGE_SIZE } from "../constants";
 import { revalidatePath } from "next/cache";
 import { insertProductSchema, updateProductSchema } from "../validators";
 import { z } from "zod";
@@ -9,7 +8,7 @@ import { Prisma } from "@prisma/client";
 
 export async function getLatestProducts() {
   const data = await prisma.product.findMany({
-    take: Number(process.env.LATEST_PRODUCTS_LIMIT),
+    take: 8,
     orderBy: { createdAt: "desc" },
   });
 
@@ -35,12 +34,20 @@ export async function getProductById(productId: string) {
 // Get all products
 export async function getAllProducts({
   query,
-  limit = PAGE_SIZE,
+  limit = 6,
   page,
+  category,
+  price,
+  rating,
+  sort,
 }: {
   query: string;
   limit?: number;
   page: number;
+  category: string;
+  price: string;
+  rating: string;
+  sort: string;
 }) {
   // Query filter
   const queryFilter: Prisma.ProductWhereInput =
@@ -53,11 +60,46 @@ export async function getAllProducts({
         }
       : {};
 
+  // Category filter
+  const categoryFilter: Prisma.ProductWhereInput =
+    category && category !== "all" ? { category } : {};
+
+  // Price filter
+  const priceFilter: Prisma.ProductWhereInput =
+    price && price !== "all"
+      ? {
+          price: {
+            gte: Number(price.split("-")[0]),
+            lte: Number(price.split("-")[1]),
+          },
+        }
+      : {};
+
+  // Rating filter
+  const ratingFilter: Prisma.ProductWhereInput =
+    rating && rating !== "all"
+      ? {
+          rating: {
+            gte: Number(rating),
+          },
+        }
+      : {};
+
   const data = await prisma.product.findMany({
     where: {
       ...queryFilter,
+      ...categoryFilter,
+      ...priceFilter,
+      ...ratingFilter,
     },
-    orderBy: { createdAt: "desc" },
+    orderBy:
+      sort === "lowest"
+        ? { price: "asc" }
+        : sort === "highest"
+        ? { price: "desc" }
+        : sort === "toprated"
+        ? { rating: "desc" }
+        : { createdAt: "desc" },
     skip: (page - 1) * limit,
     take: limit,
   });
