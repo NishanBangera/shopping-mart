@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { PAYMENT_METHODS } from "./constants";
-import { title } from "process";
 
 // Schema for inserting products
 export const insertProductSchema = z.object({
