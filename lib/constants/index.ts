@@ -1,3 +1,5 @@
+import { title } from "process";
+
 export const shippingAddressDefaultValues = {
   fullName: "",
   streetAddress: "",
@@ -28,3 +30,9 @@ export const productDefaultValues = {
 export const USER_ROLES = process.env.USER_ROLES
   ? process.env.USER_ROLES.split(",")
   : ["user", "admin"];
+
+export const reviewFormDefaultValues = {
+  title: "",
+  comment: "",
+  rating: 0,
+};
