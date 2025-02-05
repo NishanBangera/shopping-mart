@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { getOrderById, updateOrderToPaid } from "@/lib/actions/order.actions";
+import { getOrderById } from "@/lib/actions/order.actions";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import Stripe from "stripe";
@@ -31,12 +31,7 @@ const SuccessPage = async (props: {
   // Check if payment is success
   const isSuccess = paymentIntent.status === "succeeded";
 
-  if (!isSuccess) {
-    redirect(`/order/${id}`);
-  }
-  else{
-    await updateOrderToPaid({orderId:id})
-  }
+  if (!isSuccess) return redirect(`/order/${id}`);
 
   return (
     <div className="max-w-4xl w-full mx-auto space-y-8">
